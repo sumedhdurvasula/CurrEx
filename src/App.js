@@ -12,6 +12,7 @@ import uk from './w2560/gb.png'
 import australia from './w2560/au.png';
 import canada from './w2560/ca.png';
 import switzerland from './w2560/ch.png';
+import LineChart from './AccuracyChart';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
   const [selectedCountry, setSelectedCountry] = useState('');
   const [selectedCountry1, setSelectedCountry1] = useState('');
   const [apiResponse, setApiResponse] = useState('');
+  const csvFile = './australia_data.csv';
 
   const handleResult = (data) => {
     setApiResponse(data);
@@ -70,6 +72,9 @@ function App() {
             <img src={getflagimage1()} alt="Country flag" id='flag'/>
           </div>
         )}
+       <div>
+      <LineChart csvFile={csvFile} />
+    </div>
       </div>
       {apiResponse && (
 
