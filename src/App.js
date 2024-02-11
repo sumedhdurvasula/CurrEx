@@ -4,7 +4,7 @@ import { Select, Space } from 'antd';
 import CountrySelect from './countryInput';
 import CountrySelect1 from './countryInput1';
 import CalculateButton from './button';
-import { SwapOutlined } from '@ant-design/icons';
+import { SwapOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Flex, Tooltip } from 'antd';
 import japan from './w2560/jp.png';
 import korea from './w2560/kr.png'
@@ -89,14 +89,35 @@ function App() {
     switzerland: switzerland,
   }
 
+  const prices = {
+    japan: ['149.33', 'JPY'],
+    uk: ['0.79', 'GBP'],
+    australia: ['1.53', 'AUD'],
+    canada: ['1.35', 'CAD'],
+    switzerland: ['0.87', 'CHF'],
+  }
+
   const swapCountries = () => {
     const temp = selectedCountry;
     setSelectedCountry(selectedCountry1);
     setSelectedCountry1(temp);
   };
 
+  const clearCountries = () => {
+    setSelectedCountry('');
+    setSelectedCountry1('');
+    setApiResponse('');
+  };
+
   const getflagimage = () => {
     return flags[selectedCountry];
+  };
+
+  const getCurrentPrice= () => {
+    if (prices[selectedCountry] != null && prices[selectedCountry1] != null) {
+      return prices[selectedCountry][0]+" "+prices[selectedCountry][1] + " = " + "1 " + prices[selectedCountry1][1];
+    }
+    return 'NOT';
   };
 
   const getflagimage1 = () => {
@@ -124,14 +145,15 @@ function App() {
         <CountrySelect  selectedCountry={selectedCountry} setSelectedCountry={setSelectedCountry} />
         <Button type="primary" onClick={swapCountries} shape="circle" icon={<SwapOutlined />} />
         <CountrySelect1  selectedCountry1={selectedCountry1} setSelectedCountry1={setSelectedCountry1} />
+        <Button type="primary" onClick={clearCountries} shape="circle" icon={<CloseOutlined />} />
         <CalculateButton id='calculate' selectedCountry={selectedCountry} onResult={handleResult} />
       </div>
       <div className='flags'>
         {apiResponse && (
           <div className='numbers'>
             <img src={getflagimage()} alt="Country flag" id='flag'/>
-            <h3>1.29</h3>
-            <h2 id='percentage'>-1.34%</h2>
+            <h3>{getCurrentPrice()}</h3>
+            {/* <h2 id='percentage'>-1.34%</h2> */}
           </div>
         )}
         {apiResponse && (

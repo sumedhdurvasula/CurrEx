@@ -68,7 +68,7 @@ body {
     right: 20px; /* Adjust based on preference */
     bottom: 20px; /* Adjust based on preference */
     width: 600px; /* Adjust based on preference */
-    height: 400px; /* Adjust based on preference */
+    height: 350px; /* Adjust based on preference */
     overflow-y: scroll; /* Enables vertical scrolling */
     background-color: #f5f5dc; /* Light grey background, adjust as needed */
     box-shadow: 0 40px 20px rgba(0,0,0,0.1); /* Adds a slight shadow for depth */
