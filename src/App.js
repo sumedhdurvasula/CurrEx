@@ -12,9 +12,65 @@ import uk from './w2560/gb.png'
 import australia from './w2560/au.png';
 import canada from './w2560/ca.png';
 import switzerland from './w2560/ch.png';
-
+import { Line } from 'react-chartjs-2';
+import 'chart.js/auto';
+import Papa from 'papaparse';
+import csvData from './australia_accuracy_dataset.csv'; 
 
 function App() {
+  const [chartData, setChartData] = useState({
+    datasets: []
+  });
+  const [chartOptions, setChartOptions] = useState({})
+
+  useEffect(() => {
+    Papa.parse(csvData, {
+      header: true,
+      download: true,
+      dynamicTyping: true,
+      delimiter: ",",
+      complete: (result) => {
+        const filteredData = result.data.filter(item => item.year && item.ActualExchangeRate && item.PredictedExchangeRate);
+  
+        const labels = filteredData.map(item => item.year);
+        const exchangeRateData = filteredData.map(item => item.ActualExchangeRate);
+        const pppData = filteredData.map(item => item.PredictedExchangeRate);
+  
+        setChartData({
+          labels: labels,
+          datasets: [
+            {
+              label: 'Actual',
+              data: exchangeRateData,
+              fill: false,
+              borderColor: 'rgb(75, 192, 192)',
+              tension: 0.1
+            },
+            {
+              label: 'Predicted',
+              data: pppData,
+              fill: false,
+              borderColor: 'rgb(255, 99, 132)',
+              tension: 0.1
+            }
+          ]
+        });
+  
+        setChartOptions({
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Actual vs Predicted Currency Value',
+              font: {
+                size: 18,
+              },
+            },
+          },
+        });
+      }
+    });
+  }, []);
 
   const [selectedCountry, setSelectedCountry] = useState('');
   const [selectedCountry1, setSelectedCountry1] = useState('');
@@ -47,6 +103,20 @@ function App() {
     return flags[selectedCountry1];
   };
 
+  // const data = {
+  //   labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+  //   datasets: [
+  //     {
+  //       label: 'My First dataset',
+  //       backgroundColor: 'rgba(255, 99, 132, 0.2)',
+  //       borderColor: 'rgba(255, 99, 132, 1)',
+  //       borderWidth: 1,
+  //       data: [65, 59, 80, 81, 56, 55],
+  //     }
+  //   ],
+  // };
+  
+
   return (
     <div className="App">
       <h1>CurrEx</h1>
@@ -54,12 +124,14 @@ function App() {
         <CountrySelect  selectedCountry={selectedCountry} setSelectedCountry={setSelectedCountry} />
         <Button type="primary" onClick={swapCountries} shape="circle" icon={<SwapOutlined />} />
         <CountrySelect1  selectedCountry1={selectedCountry1} setSelectedCountry1={setSelectedCountry1} />
-        <CalculateButton selectedCountry={selectedCountry} onResult={handleResult} />
+        <CalculateButton id='calculate' selectedCountry={selectedCountry} onResult={handleResult} />
       </div>
       <div className='flags'>
         {apiResponse && (
-          <div>
+          <div className='numbers'>
             <img src={getflagimage()} alt="Country flag" id='flag'/>
+            <h3>1.29</h3>
+            <h2 id='percentage'>-1.34%</h2>
           </div>
         )}
         {apiResponse && (
@@ -68,6 +140,12 @@ function App() {
           </div>
         )}
       </div>
+      {apiResponse && (
+        <div className='chartContainer'>
+          {/* <Line data={data} /> */}
+          <Line options = {chartOptions} data = {chartData}/>
+        </div>
+      )}
       {apiResponse && (
 
         <div className="apiResponseContainer">

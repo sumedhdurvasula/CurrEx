@@ -28,7 +28,7 @@ const CountrySelect = ({ selectedCountry, setSelectedCountry }) => {
     },
     {
       label: 'United Kingdom',
-      value: 'united_kingdom',
+      value: 'uk',
       emoji: '🇬🇧',
       desc: 'UK (GBP)',
     },

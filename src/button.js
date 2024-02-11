@@ -11,10 +11,9 @@ const CalculateButton = ({ selectedCountry, onResult }) => {
       setLoading(true);
       
       try {
-
         console.log(selectedCountry)
         const response = await axios.post('http://127.0.0.1:5000/hello', {
-          data: {selectedCountry}
+          data: { selectedCountry }
         });
         console.log("Response data:", response.data)
         onResult(response.data);
