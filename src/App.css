@@ -2,17 +2,6 @@ body {
     margin: 0;
 }
 
-.text-container {
-  padding-top: 20px;
-}
-
-.instruction-text {
-  font-family: Roboto, sans-serif;
-  font-size: 16px;
-  color: #333;
-  font-weight: bold;
-}
-
 .App {
     font-family: Roboto, sans-serif;
     text-align: center;
