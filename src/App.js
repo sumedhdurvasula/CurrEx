@@ -56,6 +56,9 @@ function App() {
         <CountrySelect1  selectedCountry1={selectedCountry1} setSelectedCountry1={setSelectedCountry1} />
         <CalculateButton selectedCountry={selectedCountry} onResult={handleResult} />
       </div>
+      <div className="text-container">
+        <p className="instruction-text">Select two countries to see their forecasted currency exchange rate for the next quarter</p>
+      </div>
       <div className='flags'>
         {apiResponse && (
           <div>
