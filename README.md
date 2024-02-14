@@ -1,3 +1,7 @@
+https://currex.vercel.app/
+
+Currently Supports the Following Countries: UK, Switzerland, Australia, Japan, Canada
+
 https://devfolio.co/projects/currex-217f
 
 ## The problem CurrEx solves
